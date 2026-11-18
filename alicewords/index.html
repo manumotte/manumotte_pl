@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>alicewords — игра по «Алисе в Стране чудес»</title>
+    <meta
+      name="description"
+      content="Литературная игра: соберите фрагмент из «Приключений Алисы в Стране чудес» по перемешанным буквам. Русский и английский текст, три уровня сложности и статистика."
+    />
+    <meta name="theme-color" content="#f4ead8" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#answerInput">Перейти к полю ответа</a>
+
+    <div class="page">
+      <span class="backdrop-suit backdrop-suit--one" aria-hidden="true">♥</span>
+      <span class="backdrop-suit backdrop-suit--two" aria-hidden="true">♠</span>
+      <span class="backdrop-suit backdrop-suit--three" aria-hidden="true">♦</span>
+
+      <header class="site-header">
+        <div class="brand">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path
+                d="M24.5 31C19 20 18.5 9.5 22.3 8.2c3.9-1.4 6.4 9.2 7.6 20.6"
+                fill="#b7473f"
+                stroke="#202b29"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M39.5 31C45 20 45.5 9.5 41.7 8.2c-3.9-1.4-6.4 9.2-7.6 20.6"
+                fill="#d9877f"
+                stroke="#202b29"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M18.5 25.5h27L43 52H21z"
+                fill="#202b29"
+                stroke="#202b29"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path d="M20.5 39.5h23L42.4 46H21.6z" fill="#c3974d" />
+              <path d="m32 40.7 2.2 2.2-2.2 2.2-2.2-2.2z" fill="#f9f0df" />
+              <path d="M10 52.5c2.7-3 9.5-4.6 22-4.6s19.3 1.6 22 4.6c-2.7 3-9.5 4.6-22 4.6S12.7 55.5 10 52.5Z" fill="#202b29" />
+              <path d="M15 31.5c3-2.7 8.7-4.1 17-4.1s14 1.4 17 4.1" fill="none" stroke="#4f5a54" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </span>
+          <div class="brand__copy">
+            <p class="eyebrow">Литературная игра</p>
+            <h1 class="brand__title">alice<span>words</span></h1>
+          </div>
+        </div>
+
+        <div class="header-tools">
+          <div class="header-note">
+            <span class="header-note__rule" aria-hidden="true"></span>
+            <p>
+              По книге Льюиса Кэрролла<br />
+              <strong>«Приключения Алисы в Стране чудес»</strong>
+            </p>
+          </div>
+          <div class="language-switch" role="group" aria-label="Язык текста книги">
+            <span class="language-switch__label">Язык текста</span>
+            <button class="lang-btn" type="button" data-lang="ru" aria-pressed="true" title="Русский перевод">
+              RU
+            </button>
+            <button class="lang-btn" type="button" data-lang="en" aria-pressed="false" title="English original">
+              EN
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="game-card" id="gameCard" aria-labelledby="gameTitle">
+          <div class="game-card__top">
+            <p class="chapter-tag" id="chapterTag" title="Глава книги">
+              <span class="chapter-tag__suit" aria-hidden="true">♠</span>
+              <span id="chapterLabel">Загружаем главу…</span>
+            </p>
+            <div class="timer" id="timerWrap" title="Время текущего раунда">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="13" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <path d="M12 9v4.3l2.7 1.7M9 2.5h6M12 2.5V5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              </svg>
+              <span id="timer" aria-label="Время раунда">0:00.0</span>
+            </div>
+          </div>
+
+          <div class="game-card__heading">
+            <div>
+              <p class="eyebrow">Соберите фразу</p>
+              <h2 id="gameTitle">Перемешанные буквы</h2>
+            </div>
+            <p class="game-card__rule-hint" id="roundRule">Буквы внутри слов перемешаны</p>
+          </div>
+
+          <div class="difficulty">
+            <span class="difficulty__label" id="difficultyLabel">Сколько значимых слов</span>
+            <div class="mode-switch" id="modeSwitch" role="group" aria-labelledby="difficultyLabel">
+              <button class="mode-btn" type="button" data-mode="one" aria-pressed="false">
+                <span class="mode-btn__number">1</span>
+                <span class="mode-btn__word">слово</span>
+              </button>
+              <button class="mode-btn" type="button" data-mode="three" aria-pressed="false">
+                <span class="mode-btn__number">3</span>
+                <span class="mode-btn__word">слова</span>
+              </button>
+              <button class="mode-btn" type="button" data-mode="five" aria-pressed="false">
+                <span class="mode-btn__number">5</span>
+                <span class="mode-btn__word">слов</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="easy-mode" id="easyMode">
+            <div class="easy-mode__copy">
+              <span class="easy-mode__title" id="easyModeTitle">Лёгкий режим</span>
+              <span class="easy-mode__hint" id="easyModeHint">значимые слова — не длиннее 6 букв</span>
+            </div>
+            <button
+              class="switch"
+              id="easyToggle"
+              type="button"
+              role="switch"
+              aria-checked="false"
+              aria-labelledby="easyModeTitle easyModeHint"
+              title="Включить или выключить лёгкий режим"
+            >
+              <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+              <span class="switch__state" id="easyState">Выкл</span>
+            </button>
+          </div>
+
+          <p class="puzzle-summary" id="wordSummary" aria-live="polite"></p>
+
+          <div class="letters-wrap">
+            <p class="letters-label">Перемешанные буквы</p>
+            <div class="letters" id="letters" aria-label="Перемешанные буквы" lang="en"></div>
+          </div>
+
+          <form class="answer-form" id="answerForm" novalidate>
+            <label class="answer-label" for="answerInput">Ваш ответ</label>
+            <div class="input-shell" id="inputShell">
+              <span class="input-shell__quote" aria-hidden="true">“</span>
+              <input
+                id="answerInput"
+                name="answer"
+                type="text"
+                placeholder="Введите фразу как в книге…"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                enterkeyhint="done"
+                maxlength="160"
+                lang="en"
+                aria-describedby="answerHelp feedback"
+              />
+            </div>
+
+            <div class="actions">
+              <button class="btn btn--primary" type="submit" id="checkBtn">Проверить</button>
+              <button class="btn btn--ghost" type="button" id="giveUpBtn">Я сдаюсь</button>
+              <button class="btn btn--primary next-btn" type="button" id="nextBtn" hidden>
+                Следующий фрагмент
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+
+          <section class="reveal" id="reveal" aria-live="polite" hidden>
+            <p class="reveal__label" id="revealLabel">Правильный ответ</p>
+            <p class="reveal__phrase" id="revealPhrase" lang="en"></p>
+            <p class="reveal__context" id="revealContext" lang="en"></p>
+          </section>
+
+          <p class="answer-help" id="answerHelp">
+            Регистр, пробелы и знаки препинания не важны. <kbd>Enter</kbd> — проверить.
+          </p>
+        </section>
+
+        <aside class="sidebar" aria-label="Статистика и правила">
+          <section class="stats-card" aria-labelledby="statsTitle">
+            <div class="stats-card__head">
+              <div>
+                <p class="eyebrow eyebrow--light">Ваши результаты</p>
+                <h2 id="statsTitle">Статистика</h2>
+              </div>
+              <button class="reset-btn" type="button" id="resetStatsBtn">Сбросить</button>
+            </div>
+            <p class="stats-card__intro">Для каждого режима отдельно. Общая для языков и уровней.</p>
+
+            <div class="stats-list">
+              <article class="stat-mode" data-mode-block="one">
+                <div class="stat-mode__head">
+                  <h3><span class="stat-dot" aria-hidden="true"></span>1 слово</h3>
+                  <span class="stat-mode__rounds" data-stat="rounds">0 раундов</span>
+                </div>
+                <dl class="metrics">
+                  <div class="metric">
+                    <dt>Среднее</dt>
+                    <dd data-stat="avg">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Лучшее</dt>
+                    <dd data-stat="best">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Угадано</dt>
+                    <dd data-stat="solved">0</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Не угадано</dt>
+                    <dd data-stat="lost">0</dd>
+                  </div>
+                </dl>
+              </article>
+
+              <article class="stat-mode" data-mode-block="three">
+                <div class="stat-mode__head">
+                  <h3><span class="stat-dot" aria-hidden="true"></span>3 слова</h3>
+                  <span class="stat-mode__rounds" data-stat="rounds">0 раундов</span>
+                </div>
+                <dl class="metrics">
+                  <div class="metric">
+                    <dt>Среднее</dt>
+                    <dd data-stat="avg">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Лучшее</dt>
+                    <dd data-stat="best">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Угадано</dt>
+                    <dd data-stat="solved">0</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Не угадано</dt>
+                    <dd data-stat="lost">0</dd>
+                  </div>
+                </dl>
+              </article>
+
+              <article class="stat-mode" data-mode-block="five">
+                <div class="stat-mode__head">
+                  <h3><span class="stat-dot" aria-hidden="true"></span>5 слов</h3>
+                  <span class="stat-mode__rounds" data-stat="rounds">0 раундов</span>
+                </div>
+                <dl class="metrics">
+                  <div class="metric">
+                    <dt>Среднее</dt>
+                    <dd data-stat="avg">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Лучшее</dt>
+                    <dd data-stat="best">—</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Угадано</dt>
+                    <dd data-stat="solved">0</dd>
+                  </div>
+                  <div class="metric">
+                    <dt>Не угадано</dt>
+                    <dd data-stat="lost">0</dd>
+                  </div>
+                </dl>
+              </article>
+            </div>
+
+            <p class="stats-card__note">
+              Среднее и лучшее время считаются по угаданным фрагментам. «Не угадано» — раунды, завершённые кнопкой
+              «Я сдаюсь».
+            </p>
+          </section>
+
+          <section class="rules-card" aria-labelledby="rulesTitle">
+            <div class="rules-card__head">
+              <span class="rules-card__number" aria-hidden="true">A</span>
+              <h2 id="rulesTitle">Как играть</h2>
+            </div>
+            <ol class="rules">
+              <li><span>1</span>Выберите сложность: 1, 3 или 5 значимых слов.</li>
+              <li><span>2</span>Соберите фразу из перемешанных букв и нажмите «Проверить».</li>
+              <li><span>3</span>Застряли? «Я сдаюсь» покажет правильный ответ и засчитает неудачу.</li>
+            </ol>
+            <p class="rules-card__note" id="sourceNote">
+              Игра идёт по русскому переводу А. Н. Рождественской (1908–1909). Предлоги, частицы, союзы и
+              местоимения не считаются значимыми словами — поэтому в режиме «3 слова» запросто может оказаться
+              пять слов.
+            </p>
+          </section>
+
+          <blockquote class="quote-card">
+            <p>«Что толку в книжке, если в ней нет ни картинок, ни разговоров?»</p>
+            <cite>— Алиса</cite>
+          </blockquote>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          Английский текст: Lewis Carroll, <em>Alice’s Adventures in Wonderland</em> (1865).
+          <a href="https://www.gutenberg.org/ebooks/928" target="_blank" rel="noreferrer">Project Gutenberg, ebook 928</a>,
+          общественное достояние.<br />
+          Русский текст: перевод А. Н. Рождественской (1908–1909),
+          <a
+            href="https://ru.wikisource.org/wiki/Приключения_Алисы_в_стране_чудес_(Кэрролл;_Рождественская)"
+            target="_blank"
+            rel="noreferrer"
+            >Викитека</a
+          >,
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" target="_blank" rel="noreferrer"
+            >CC BY-SA 4.0</a
+          >.
+        </p>
+        <p class="site-footer__mark">Чай, карты и немного чудес <span aria-hidden="true">♥</span></p>
+      </footer>
+    </div>
+
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <noscript>
+      <p class="noscript">Для игры нужен JavaScript. Включите его, пожалуйста.</p>
+    </noscript>
+
+    <script src="book.js"></script>
+    <script src="core.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
