@@ -37,7 +37,7 @@
 
   const MODE_ORDER = ["one", "three", "five"];
   const LANG_ORDER = ["ru", "en"];
-  const EASY_MAX_CONTENT_LETTERS = 6;
+  const EASY_MAX_CONTENT_LETTERS = 5;
 
   // Longer Russian words are allowed than English ones; the tile layout can
   // still accommodate a twelve-letter Cyrillic word on a phone.

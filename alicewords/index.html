@@ -78,12 +78,28 @@
       </header>
 
       <main class="layout">
-        <section class="game-card" id="gameCard" aria-labelledby="gameTitle">
+        <section class="game-card" id="gameCard" aria-label="Игра alicewords">
           <div class="game-card__top">
-            <p class="chapter-tag" id="chapterTag" title="Глава книги">
-              <span class="chapter-tag__suit" aria-hidden="true">♠</span>
-              <span id="chapterLabel">Загружаем главу…</span>
-            </p>
+            <div class="game-card__identity">
+              <p class="chapter-tag" id="chapterTag" title="Глава книги">
+                <span class="chapter-tag__suit" aria-hidden="true">♠</span>
+                <span id="chapterLabel">Загружаем главу…</span>
+              </p>
+              <button
+                class="easy-inline"
+                id="easyToggle"
+                type="button"
+                role="switch"
+                aria-checked="false"
+                aria-label="Лёгкий режим: значимые слова не длиннее 5 букв"
+                title="Включить лёгкий режим: значимые слова не длиннее 5 букв"
+              >
+                <span class="easy-inline__label">Лёгкий</span>
+                <span class="easy-inline__track" aria-hidden="true">
+                  <span class="easy-inline__thumb"></span>
+                </span>
+              </button>
+            </div>
             <div class="timer" id="timerWrap" title="Время текущего раунда">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <circle cx="12" cy="13" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7" />
@@ -91,14 +107,6 @@
               </svg>
               <span id="timer" aria-label="Время раунда">0:00.0</span>
             </div>
-          </div>
-
-          <div class="game-card__heading">
-            <div>
-              <p class="eyebrow">Соберите фразу</p>
-              <h2 id="gameTitle">Перемешанные буквы</h2>
-            </div>
-            <p class="game-card__rule-hint" id="roundRule">Буквы внутри слов перемешаны</p>
           </div>
 
           <div class="difficulty">
@@ -119,29 +127,7 @@
             </div>
           </div>
 
-          <div class="easy-mode" id="easyMode">
-            <div class="easy-mode__copy">
-              <span class="easy-mode__title" id="easyModeTitle">Лёгкий режим</span>
-              <span class="easy-mode__hint" id="easyModeHint">значимые слова — не длиннее 6 букв</span>
-            </div>
-            <button
-              class="switch"
-              id="easyToggle"
-              type="button"
-              role="switch"
-              aria-checked="false"
-              aria-labelledby="easyModeTitle easyModeHint"
-              title="Включить или выключить лёгкий режим"
-            >
-              <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
-              <span class="switch__state" id="easyState">Выкл</span>
-            </button>
-          </div>
-
-          <p class="puzzle-summary" id="wordSummary" aria-live="polite"></p>
-
           <div class="letters-wrap">
-            <p class="letters-label">Перемешанные буквы</p>
             <div class="letters" id="letters" aria-label="Перемешанные буквы" lang="en"></div>
           </div>
 
@@ -278,32 +264,14 @@
             </div>
 
             <p class="stats-card__note">
-              Среднее и лучшее время считаются по угаданным фрагментам. «Не угадано» — раунды, завершённые кнопкой
-              «Я сдаюсь».
+              <span class="stats-card__note-line">
+                Среднее и лучшее время считаются по угаданным фрагментам.
+              </span>
+              <span class="stats-card__note-line">
+                <span class="nowrap">«Не угадано»</span> — раунды, завершённые кнопкой «Я сдаюсь».
+              </span>
             </p>
           </section>
-
-          <section class="rules-card" aria-labelledby="rulesTitle">
-            <div class="rules-card__head">
-              <span class="rules-card__number" aria-hidden="true">A</span>
-              <h2 id="rulesTitle">Как играть</h2>
-            </div>
-            <ol class="rules">
-              <li><span>1</span>Выберите сложность: 1, 3 или 5 значимых слов.</li>
-              <li><span>2</span>Соберите фразу из перемешанных букв и нажмите «Проверить».</li>
-              <li><span>3</span>Застряли? «Я сдаюсь» покажет правильный ответ и засчитает неудачу.</li>
-            </ol>
-            <p class="rules-card__note" id="sourceNote">
-              Игра идёт по русскому переводу А. Н. Рождественской (1908–1909). Предлоги, частицы, союзы и
-              местоимения не считаются значимыми словами — поэтому в режиме «3 слова» запросто может оказаться
-              пять слов.
-            </p>
-          </section>
-
-          <blockquote class="quote-card">
-            <p>«Что толку в книжке, если в ней нет ни картинок, ни разговоров?»</p>
-            <cite>— Алиса</cite>
-          </blockquote>
         </aside>
       </main>
 

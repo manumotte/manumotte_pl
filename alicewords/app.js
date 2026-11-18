@@ -11,15 +11,6 @@
   const DEFAULT_LANG = "ru";
   const RECENT_LIMIT = 8;
 
-  const SOURCE_NOTES = {
-    ru:
-      "Игра идёт по русскому переводу А. Н. Рождественской (1908–1909). Предлоги, частицы, союзы и " +
-      "местоимения не считаются значимыми словами — поэтому в режиме «3 слова» запросто может оказаться пять слов.",
-    en:
-      "Игра идёт по оригинальному английскому тексту. Предлоги, артикли, частицы, союзы и местоимения " +
-      "не считаются значимыми словами — поэтому в режиме «3 слова» запросто может оказаться пять слов.",
-  };
-
   const PLACEHOLDERS = {
     ru: "Введите фразу как в книге…",
     en: "Type the phrase from the book…",
@@ -63,10 +54,7 @@
     elements.modeSwitch = $("modeSwitch");
     elements.modeButtons = Array.from(document.querySelectorAll(".mode-btn"));
     elements.langButtons = Array.from(document.querySelectorAll(".lang-btn"));
-    elements.easyMode = $("easyMode");
     elements.easyToggle = $("easyToggle");
-    elements.easyState = $("easyState");
-    elements.wordSummary = $("wordSummary");
     elements.letters = $("letters");
     elements.answerForm = $("answerForm");
     elements.answerInput = $("answerInput");
@@ -79,7 +67,6 @@
     elements.revealLabel = $("revealLabel");
     elements.revealPhrase = $("revealPhrase");
     elements.revealContext = $("revealContext");
-    elements.sourceNote = $("sourceNote");
     elements.resetStatsBtn = $("resetStatsBtn");
     elements.confetti = $("confetti");
     elements.statsBlocks = Array.from(document.querySelectorAll(".stat-mode"));
@@ -225,9 +212,6 @@
       button.setAttribute("aria-pressed", String(button.dataset.lang === state.lang));
     });
     document.documentElement.dataset.bookLang = state.lang;
-    if (elements.sourceNote) {
-      elements.sourceNote.textContent = SOURCE_NOTES[state.lang] || SOURCE_NOTES.ru;
-    }
     if (elements.answerInput) {
       elements.answerInput.lang = state.lang;
       elements.answerInput.placeholder = PLACEHOLDERS[state.lang] || PLACEHOLDERS.ru;
@@ -240,11 +224,15 @@
   function updateEasyControls() {
     if (!elements.easyToggle) return;
     elements.easyToggle.setAttribute("aria-checked", String(state.easy));
-    elements.easyState.textContent = state.easy ? "Вкл" : "Выкл";
-    elements.easyMode.classList.toggle("is-on", state.easy);
+    elements.easyToggle.setAttribute(
+      "aria-label",
+      state.easy
+        ? "Лёгкий режим включён. Значимые слова не длиннее 5 букв."
+        : "Лёгкий режим выключен. Включить: значимые слова не длиннее 5 букв."
+    );
     elements.easyToggle.title = state.easy
       ? "Выключить лёгкий режим"
-      : "Включить лёгкий режим: значимые слова не длиннее 6 букв";
+      : "Включить лёгкий режим: значимые слова не длиннее 5 букв";
   }
 
   function getPool(mode) {
@@ -420,9 +408,6 @@
       elements.answerInput.lang = puzzle.lang;
       elements.revealPhrase.lang = puzzle.lang;
       elements.revealContext.lang = puzzle.lang;
-      elements.wordSummary.textContent = core.wordSummary(puzzle);
-      elements.wordSummary.title =
-        "Предлоги, артикли, частицы и другие служебные слова не входят в число значимых.";
       renderLetters(puzzle);
       startTimer();
 
@@ -552,7 +537,6 @@
 
   function showFatalError(message) {
     elements.chapterLabel.textContent = "Ошибка";
-    elements.wordSummary.textContent = "Игра временно недоступна.";
     elements.letters.replaceChildren();
     elements.answerInput.disabled = true;
     elements.checkBtn.disabled = true;
